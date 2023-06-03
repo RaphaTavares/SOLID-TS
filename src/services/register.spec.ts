@@ -1,18 +1,18 @@
 import { expect, test, describe, it, beforeEach } from 'vitest';
-import { RegisterService } from './registerService';
-import { PrismaUsersRepository } from '@/repositories/prisma/prismaUsersRepository';
+import { RegisterUseCase } from './register';
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository';
 import { compare } from 'bcryptjs';
-import { InMemoryUsersRepository } from '@/repositories/inMemory/inMemoryUsersRepository';
+import { InMemoryUsersRepository } from '@/repositories/inMemory/in-memory-users-repository';
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsError';
 
 
 let usersRepository: InMemoryUsersRepository;
-let sut: RegisterService;
+let sut: RegisterUseCase;
 
-describe("Register Service", () => {
+describe("Register use case", () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository();
-        sut = new RegisterService(usersRepository);
+        sut = new RegisterUseCase(usersRepository);
     });
 
     it("should hash user password upon registration", async () => {

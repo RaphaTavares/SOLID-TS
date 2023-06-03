@@ -1,21 +1,21 @@
-import { UsersRepository } from "@/repositories/usersRepositoryInterface";
+import { UsersRepository } from "@/repositories/users-repository-interface";
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "./errors/invalidCredentialsError";
 import { User } from "@prisma/client";
 
-interface IAuthenticateServiceRequest {
+interface IAuthenticateUseCaseRequest {
     email: string
     password: string
 }
 
-interface IAuthenticateServiceResponse {
+interface IAuthenticateUseCaseResponse {
     user: User
 }
 
-export class AuthenticateService {
+export class AuthenticateUseCase {
     constructor(private usersRepository: UsersRepository) { }
 
-    async execute({ email, password }: IAuthenticateServiceRequest): Promise<IAuthenticateServiceResponse> {
+    async execute({ email, password }: IAuthenticateUseCaseRequest): Promise<IAuthenticateUseCaseResponse> {
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user)
