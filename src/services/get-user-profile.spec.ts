@@ -33,6 +33,6 @@ describe("Get user profile use case", () => {
             userId: 'non-existing-id'
         });
 
-        expect(result).rejects.toBeInstanceOf(ResourceNotFoundError);
+        await expect(result).rejects.toBeInstanceOf(ResourceNotFoundError);
     })
 })

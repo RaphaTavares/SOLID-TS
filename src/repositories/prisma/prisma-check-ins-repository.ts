@@ -3,7 +3,7 @@ import { CheckIn, Prisma } from "@prisma/client";
 import { CheckInsRepository } from "../check-ins-repository";
 
 export class PrismaCheckInsRepository implements CheckInsRepository {
-    async create(data: Prisma.CheckInCreateInput): Promise<CheckIn> {
+    async create(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn> {
         const checkIn = await prisma.checkIn.create({
             data
         });

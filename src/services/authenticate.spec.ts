@@ -43,7 +43,7 @@ describe("Authenticate use case", () => {
             password: "123456"
         });
 
-        expect(promiseAnswer).rejects.toBeInstanceOf(InvalidCredentialsError);
+        await expect(promiseAnswer).rejects.toBeInstanceOf(InvalidCredentialsError);
     });
 
     it("should not be able to authenticate with wrong password", async () => {
@@ -59,6 +59,6 @@ describe("Authenticate use case", () => {
             password: "wrongPassword"
         });
 
-        expect(promiseAnswer).rejects.toBeInstanceOf(InvalidCredentialsError);
+        await expect(promiseAnswer).rejects.toBeInstanceOf(InvalidCredentialsError);
     })
 });
