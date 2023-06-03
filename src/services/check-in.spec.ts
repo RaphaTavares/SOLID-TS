@@ -3,36 +3,25 @@ import { GetUserProfileUseCase } from "./get-user-profile";
 import { beforeEach, describe, expect, it } from "vitest";
 import { hash } from "bcryptjs";
 import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
+import { InMemoryCheckInsRepository } from "@/repositories/inMemory/in-memory-check-ins-repository";
+import { CheckInUseCase } from "./check-in";
 
-let usersRepository: InMemoryUsersRepository;
-let sut: GetUserProfileUseCase;
+let checkInsRepository: InMemoryCheckInsRepository;
+let sut: CheckInUseCase;
 
 describe("Check in use case", () => {
     beforeEach(() => {
-        usersRepository = new InMemoryUsersRepository();
-        sut = new GetUserProfileUseCase(usersRepository);
+        checkInsRepository = new InMemoryCheckInsRepository();
+        sut = new CheckInUseCase(checkInsRepository);
     });
 
-    it("should be able to get user profile", async () => {
-
-        const createdUser = await usersRepository.create({
-            name: "John Doe",
-            email: "johndoe@example.com",
-            password_hash: await hash("123456", 6)
-        })
-
-        const { user } = await sut.execute({
-            userId: createdUser.id
+    //hífen do check-in é só quando é substantivo. Quando é verbo é sem hifen
+    it("should be able to check in", async () => {
+        const { checkIn } = await sut.execute({
+            gymId: 'gym-01',
+            userId: 'user-01'
         });
 
-        expect(user.name).toEqual("John Doe");
+        expect(checkIn.id).toEqual(expect.any(String));
     });
-
-    it("should not be able to get user profile with wrong id", async () => {
-        const result = sut.execute({
-            userId: 'non-existing-id'
-        });
-
-        expect(result).rejects.toBeInstanceOf(ResourceNotFoundError);
-    })
 })
