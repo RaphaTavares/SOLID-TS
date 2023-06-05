@@ -33,6 +33,7 @@
     "dayjs": "1.11.8",
     "dotenv": "16.0.3",
     "fastify": "4.17.0",
+    "geolib": "3.3.4",
     "swagger-jsdoc": "6.2.8",
     "swagger-ui-express": "4.6.3",
     "zod": "3.21.4"

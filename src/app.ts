@@ -16,6 +16,7 @@ app.setErrorHandler((error, _, reply) => {
         console.error(error);
     }
     else {
+        console.error("PROD: " + error);
         // deveria ser implementado o log para uma ferramenta externa como datadog
     }
 
