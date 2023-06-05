@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { UserAlreadyExistsError } from "./errors/userAlreadyExistsError";
 import { User } from "@prisma/client";
-import { UsersRepository } from "@/repositories/users-repository-interface";
+import { UsersRepository } from "@/repositories/interfaces/users-repository-interface";
 
 interface IRegisterUseCaseRequest {
     name: string
