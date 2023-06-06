@@ -19,6 +19,8 @@ interface ICheckInUseCaseResponse {
 }
 
 export class CheckInUseCase {
+    static readonly MAX_DISTANCE_IN_METERS: number = 100;
+
     constructor(private checkInsRepository: CheckInsRepository, private gymsRepository: GymsRepository) { }
 
     async execute({ userId, gymId, userLatitude, userLongitude }: ICheckInUseCaseRequest): Promise<ICheckInUseCaseResponse> {
@@ -32,7 +34,8 @@ export class CheckInUseCase {
             { latitude: gym.latitude.toNumber(), longitude: gym.longitude.toNumber() }
         );
 
-        if (distance > 100)
+
+        if (distance > CheckInUseCase.MAX_DISTANCE_IN_METERS)
             throw new Error();
 
         const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(userId, new Date());
