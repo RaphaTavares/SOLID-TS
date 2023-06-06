@@ -11,7 +11,7 @@ export function getDistanceBetweenCoordinates(
 ) {
     const pointA = { latitude: from.latitude, longitude: from.longitude };
     const pointB = { latitude: to.latitude, longitude: to.longitude };
+
     const distance = geolib.getDistance(pointA, pointB);
-    console.log(`distancia é ${distance}`);
     return distance;
 }
