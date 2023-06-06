@@ -8,6 +8,9 @@ let checkInsRepository: InMemoryCheckInsRepository;
 let gymsRepository: InMemoryGymsRepository;
 let sut: CheckInUseCase;
 
+//const pointA = { latitude: -21.7732815, longitude: -43.3477686 };
+//const pointB = { latitude: -21.7744379, longitude: -43.3479359 };
+
 describe("Check in use case", () => {
     beforeEach(() => {
         checkInsRepository = new InMemoryCheckInsRepository();
@@ -36,8 +39,8 @@ describe("Check in use case", () => {
         const { checkIn } = await sut.execute({
             gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 21.7740532,
-            userLongitude: -43.3482673
+            userLatitude: 0,
+            userLongitude: 0
         });
 
         expect(checkIn.id).toEqual(expect.any(String));
@@ -49,26 +52,28 @@ describe("Check in use case", () => {
         await sut.execute({
             gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 21.7740532,
-            userLongitude: -43.3482673
+            userLatitude: 0,
+            userLongitude: 0
         });
 
         await expect(sut.execute({
             gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 21.7740532,
-            userLongitude: -43.3482673
+            userLatitude: 0,
+            userLongitude: 0
         })).rejects.toBeInstanceOf(Error);
     });
 
     it("should be able to check in on different days", async () => {
         vi.setSystemTime(new Date(2022, 0, 28, 8, 0, 0));
 
+        debugger;
+
         await sut.execute({
             gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 21.7740532,
-            userLongitude: -43.3482673
+            userLatitude: 0,
+            userLongitude: 0
         });
 
         vi.setSystemTime(new Date(2022, 0, 29, 8, 0, 0));
@@ -76,26 +81,17 @@ describe("Check in use case", () => {
         await expect(sut.execute({
             gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 21.7740532,
-            userLongitude: -43.3482673
+            userLatitude: 0,
+            userLongitude: 0
         })).resolves.toBeTruthy();
     });
 
     it("should not be able to check in on a distant gym", async () => {
-        gymsRepository.items.push({
-            id: "gym-02",
-            title: "Javascript gym",
-            description: '',
-            phone: '',
-            latitude: new Decimal(-21.7757358),
-            longitude: new Decimal(-43.3482995),
-        });
-
         await expect(sut.execute({
-            gymId: 'gym-02',
+            gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 21.7740532,
-            userLongitude: -43.3482673
+            userLatitude: -21.7732815,
+            userLongitude: -43.3477686
         })).rejects.toBeInstanceOf(Error);
     });
 })
